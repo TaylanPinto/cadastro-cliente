@@ -1,0 +1,88 @@
+<div class="container">
+
+<ul class="list-group">
+    <li *ngFor="let empresa of empresas " class="list-group-item">{{ empresa.cpfCnpj }} - {{ empresa.razaoSocial }} </li>
+  </ul>
+
+  <br>
+
+  <button type="button" class="btn btn-primary" (click)="openModal(template)">Cadastrar novo cliente</button>
+
+</div>
+
+
+  
+<ng-template #template>
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Cadastrar</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3">
+        <label for="cpfCnpj" class="form-label">cpf/cnpj</label>
+        <input type="text" class="form-control" id="cpfCnpj" placeholder="Digite seu cpf/cnpj">
+      
+        <div class="mb-3">
+            <label for="email" class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="email" placeholder="Digite seu E-mail">
+          
+            <div class="mb-3">
+                <label for="razaoSocial" class="form-label">Razão social</label>
+                <input type="text" class="form-control" id="razaoSocial" placeholder="Digite a Razão social">
+          
+                <div class="mb-3">
+                    <label for="Telefone" class="form-label">Telefone</label>
+                    <input type="text" class="form-control" id="Telefone" placeholder="Digite seu Número">
+                  </div>
+
+                  <div class="mb-3">
+                    <fieldset class=""><legend>Taxas</legend>
+                    <label for="taxa" class="form-label">Débito</label>
+                    <input type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
+
+                    <label for="taxa" class="form-label">Crédito</label>
+                    <input type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
+
+                    <label for="taxa" class="form-label">Parcelado</label>
+                    <input type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
+                </fieldset>
+                  </div>
+
+<div class="row">
+<div class="col">
+
+    <label for="maq-model" class="form-label">Modelo</label>
+    <select id="maq-model" class="form-select" aria-label="Default select example">
+        <option selected>Selecionar Maquina</option>
+        <option value="1">lio v2 169.90</option>
+        <option value="2">tli v2 169.90</option>
+        <option value="3">pio v2 169.90</option>
+    </select>
+    
+</div>
+    <div class="col">
+        <label for="qnt-maq" class="form-label">Quantidade</label>
+        <input id="qnt-maq" type="text" class="form-control" placeholder="Quantidade de Máquina">
+    </div>
+    <div class="col">
+        <label for="resultado" class="form-label">Total</label>
+        <input id="resultado" type="text" class="form-control" disabled>
+    </div>
+</div>
+                 <div class="modal-footer">
+                      <button class="btn btn-primary" >Salvar</button>
+                  </div>
+                
+                
+
+            </div>
+        </div>
+      </div>      
+    </div>
+    
+    
+ 
+</ng-template>
