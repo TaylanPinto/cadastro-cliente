@@ -22,54 +22,54 @@
   </div>
   <div class="modal-body">
     <div class="mb-3">
+        
         <label for="cpfCnpj" class="form-label">cpf/cnpj</label>
-        <input type="text" class="form-control" id="cpfCnpj" placeholder="Digite seu cpf/cnpj">
+        <input [(ngModel)]="clientFee.cpfCnpj" type="text" class="form-control" id="cpfCnpj" placeholder="Digite seu cpf/cnpj">
       
         <div class="mb-3">
             <label for="email" class="form-label">E-mail</label>
-            <input type="email" class="form-control" id="email" placeholder="Digite seu E-mail">
+            <input [(ngModel)]="clientFee.email" type="email" class="form-control" id="email" placeholder="Digite seu E-mail">
           
             <div class="mb-3">
                 <label for="razaoSocial" class="form-label">Razão social</label>
-                <input type="text" class="form-control" id="razaoSocial" placeholder="Digite a Razão social">
+                <input [(ngModel)]="clientFee.razaoSocial" type="text" class="form-control" id="razaoSocial" placeholder="Digite a Razão social">
           
                 <div class="mb-3">
                     <label for="Telefone" class="form-label">Telefone</label>
-                    <input type="text" class="form-control" id="Telefone" placeholder="Digite seu Número">
+                    <input [(ngModel)]="clientFee.telefone" type="text" class="form-control" id="Telefone" placeholder="Digite seu Número">
                   </div>
 
                   <div class="mb-3">
                     <fieldset class=""><legend>Taxas</legend>
                     <label for="taxa" class="form-label">Débito</label>
-                    <input type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
+                    <input [(ngModel)]="clientFee.debito" type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
 
                     <label for="taxa" class="form-label">Crédito</label>
-                    <input type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
+                    <input [(ngModel)]="clientFee.credito" type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
 
                     <label for="taxa" class="form-label">Parcelado</label>
-                    <input type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
+                    <input [(ngModel)]="clientFee.parcelado" type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
                 </fieldset>
                   </div>
 
 <div class="row">
 <div class="col">
-
+    <!--pre>{{clientFee | json}}</pre-->
     <label for="maq-model" class="form-label">Modelo</label>
-    <select id="maq-model" class="form-select" aria-label="Default select example">
-        <option selected>Selecionar Maquina</option>
-        <option value="1">lio v2 169.90</option>
-        <option value="2">tli v2 169.90</option>
-        <option value="3">pio v2 169.90</option>
+    <select (change)="updateTotal()" [(ngModel)]="clientFee.modelo" id="maq-model" class="form-select" aria-label="Default select example">
+        <option value= "0" selected>Selecionar Maquina</option>
+        <option *ngFor="let maquina of maquinas" [ngValue]="maquina">{{ maquina.nome }} - {{ maquina.valor | currency: 'BRL' }}</option>
+    
     </select>
     
 </div>
     <div class="col">
         <label for="qnt-maq" class="form-label">Quantidade</label>
-        <input id="qnt-maq" type="text" class="form-control" placeholder="Quantidade de Máquina">
+        <input (keyup)="updateTotal()" [(ngModel)]="clientFee.quantidade" id="qnt-maq" type="text" class="form-control" placeholder="Quantidade de Máquina">
     </div>
     <div class="col">
         <label for="resultado" class="form-label">Total</label>
-        <input id="resultado" type="text" class="form-control" disabled>
+        <input  [(ngModel)]="clientFee.total" id="resultado" type="text" class="form-control" disabled>
     </div>
 </div>
                  <div class="modal-footer">
