@@ -58,7 +58,7 @@
     <label for="maq-model" class="form-label">Modelo</label>
     <select (change)="updateTotal()" [(ngModel)]="clientFee.modelo" id="maq-model" class="form-select" aria-label="Default select example">
         <option value= "0" selected>Selecionar Maquina</option>
-        <option *ngFor="let maquina of maquinas" [ngValue]="maquina">{{ maquina.nome }} - {{ maquina.valor | currency: 'BRL' }}</option>
+        <option *ngFor="let maquina of maquinas" [ngValue]="maquina">{{ maquina.nome }} - {{ maquina.valor }}</option>
     
     </select>
     
@@ -73,7 +73,7 @@
     </div>
 </div>
                  <div class="modal-footer">
-                      <button class="btn btn-primary" >Salvar</button>
+                      <button (click)="saveClientFee()" class="btn btn-primary" >Salvar</button>
                   </div>
                 
                 

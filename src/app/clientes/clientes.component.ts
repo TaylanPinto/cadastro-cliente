@@ -1,5 +1,6 @@
+import { ClienteService } from './../services/cliente.service';
 import { ClientFee } from './../models/ClientFee';
-import { Component, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 @Component({
@@ -9,7 +10,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 })
 
 
-export class ClientesComponent {
+export class ClientesComponent implements OnInit {
 
   public clientFee: ClientFee = new ClientFee()
 
@@ -35,27 +36,30 @@ export class ClientesComponent {
  ];
 
 
-  empresas = [
-    {cpfCnpj: '00000000000', 
-    razaoSocial: 'empresaRaioDeSol',
-    telefone: '48 0000000000',
-    email: 'email@email.com'},
-
-    {cpfCnpj: '00000000000', 
-    razaoSocial: 'empresaRaioDeSol',
-    telefone: '48 0000000000',
-    email: 'email@email.com'},
-
-    {cpfCnpj: '00000000000', 
-    razaoSocial: 'empresaRaioDeSol',
-    telefone: '48 0000000000',
-    email: 'email@email.com'}
-  ];
+  empresas!: ClientFee [] 
   
 
   modalRef?: BsModalRef;
-  constructor(private modalService: BsModalService) {}
+
+  constructor(private modalService: BsModalService, private clienteService: ClienteService) {}
+
+
+
+  ngOnInit() {
+    this.getEmpresasFee()
+    console.log(this.empresas)
+  }
  
+  getEmpresasFee(){
+    this.empresas = this.clienteService.getClientFee()
+  }
+
+  saveClientFee(){
+    this.clienteService.saveClientFee(this.clientFee)
+    this.modalService.hide();
+    this.getEmpresasFee()
+  }
+
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
