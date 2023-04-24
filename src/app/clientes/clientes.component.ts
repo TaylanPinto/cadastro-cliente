@@ -2,6 +2,7 @@ import { ClienteService } from './../services/cliente.service';
 import { ClientFee } from './../models/ClientFee';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Form } from '@angular/forms';
 
 @Component({
   selector: 'app-clientes',
@@ -9,16 +10,15 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
   styleUrls: ['./clientes.component.css']
 })
 
-
 export class ClientesComponent implements OnInit {
 
-  public clientFee: ClientFee = new ClientFee()
+  public clientFee: ClientFee = new ClientFee();
 
   public updateTotal() { 
     if (this.clientFee?.modelo?.valor && this.clientFee?.quantidade) {
       this.clientFee.total = this.clientFee.modelo.valor * this.clientFee.quantidade
     }
-  } 
+  };
 
 
  maquinas = [
@@ -35,15 +35,13 @@ export class ClientesComponent implements OnInit {
     valor: 169.90},
  ];
 
-
-  empresas!: ClientFee [] 
+  empresas!: ClientFee []; 
   
-
   modalRef?: BsModalRef;
 
-  constructor(private modalService: BsModalService, private clienteService: ClienteService) {}
-
-
+  constructor (private modalService: BsModalService, 
+    private clienteService: ClienteService
+    ) {}
 
   ngOnInit() {
     this.getEmpresasFee()
@@ -54,15 +52,15 @@ export class ClientesComponent implements OnInit {
     this.empresas = this.clienteService.getClientFee()
   }
 
-  saveClientFee(){
-    this.clienteService.saveClientFee(this.clientFee)
-    this.modalService.hide();
-    this.getEmpresasFee()
+ saveClientFee(form: Form){
+   this.clienteService.saveClientFee(this.clientFee)
+   this.modalService.hide();
+   this.getEmpresasFee()
   }
+
+  
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 }
-
-

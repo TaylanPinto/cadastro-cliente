@@ -1,3 +1,4 @@
+import { ClientesComponent } from './../clientes/clientes.component';
 import { ClientFee } from './../models/ClientFee';
 import { Injectable } from '@angular/core';
 
@@ -17,12 +18,10 @@ export class ClienteService {
 
   }
 
-
   public getClientFee(): Array<ClientFee>  {
     const jsonString = localStorage.getItem('clientFee') || '[]';
     return JSON.parse(jsonString);
-  }
-
 
   
+  }
 }

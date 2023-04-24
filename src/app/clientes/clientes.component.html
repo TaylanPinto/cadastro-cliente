@@ -1,88 +1,116 @@
 <div class="container">
 
-<ul class="list-group">
-    <li *ngFor="let empresa of empresas " class="list-group-item">{{ empresa.cpfCnpj }} - {{ empresa.razaoSocial }} </li>
-  </ul>
-
-  <br>
-
-  <button type="button" class="btn btn-primary" (click)="openModal(template)">Cadastrar novo cliente</button>
-
-</div>
-
-
+  <ul class="list-group">
+      <li *ngFor="let empresa of empresas " class="list-group-item">{{ empresa.cpfCnpj }} - {{ empresa.razaoSocial }} </li>
+    </ul>
   
-<ng-template #template>
-
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Cadastrar</h4>
-    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
-      <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button>
+    <br>
+  
+    <button type="button" class="btn btn-primary" (click)="openModal(template)">Cadastrar novo cliente</button>
+  
   </div>
-  <div class="modal-body">
-    <div class="mb-3">
-        
-        <label for="cpfCnpj" class="form-label">cpf/cnpj</label>
-        <input [(ngModel)]="clientFee.cpfCnpj" type="text" class="form-control" id="cpfCnpj" placeholder="Digite seu cpf/cnpj">
+  
+  
+    
+  <ng-template #template>
+  
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Cadastrar</h4>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
       
-        <div class="mb-3">
-            <label for="email" class="form-label">E-mail</label>
-            <input [(ngModel)]="clientFee.email" type="email" class="form-control" id="email" placeholder="Digite seu E-mail">
-          
-            <div class="mb-3">
-                <label for="razaoSocial" class="form-label">Razão social</label>
-                <input [(ngModel)]="clientFee.razaoSocial" type="text" class="form-control" id="razaoSocial" placeholder="Digite a Razão social">
-          
-                <div class="mb-3">
-                    <label for="Telefone" class="form-label">Telefone</label>
-                    <input [(ngModel)]="clientFee.telefone" type="text" class="form-control" id="Telefone" placeholder="Digite seu Número">
-                  </div>
+        
+        <form #f="ngForm" (ngSubmit)="saveClientFee(f)" >
+
+          <div class="mb-3">
+          <label for="cpfCnpj" class="form-label">cpf/cnpj</label>
+          <input [(ngModel)]="clientFee.cpfCnpj" type="text" class="form-control" id="cpfCnpj" name="cpfCnpj"
+          placeholder="Digite seu cpf/cnpj" required #cpfCnpj="ngModel">
+          <div *ngIf="!cpfCnpj.valid && cpfCnpj.touched" 
+          class="alert alert-danger" role="alert">
+           Nome é obrigatório.
+         </div>
+
+        
+          <div class="mb-3">
+              <label for="email" class="form-label">E-mail</label>
+              <input [(ngModel)]="clientFee.email" type="email" class="form-control" id="email" name="email"
+              placeholder="Digite seu E-mail" required email #email="ngModel">
+              <div *ngIf="!email.valid && email .touched" 
+              class="alert alert-danger" role="alert">
+               Nome é obrigatório.
+             </div>
+            
+
+              <div class="mb-3">
+                  <label for="razaoSocial" class="form-label">Razão social</label>
+                  <input [(ngModel)]="clientFee.razaoSocial" type="text" class="form-control" name="razao"
+                  id="razaoSocial" placeholder="Digite a Razão social" required #razao="ngModel">
+                  <div *ngIf="!razao.valid && razao.touched" 
+                  class="alert alert-danger" role="alert">
+                   Nome é obrigatório.
+                 </div>
 
                   <div class="mb-3">
-                    <fieldset class=""><legend>Taxas</legend>
-                    <label for="taxa" class="form-label">Débito</label>
-                    <input [(ngModel)]="clientFee.debito" type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
+                      <label for="Telefone" class="form-label">Telefone</label>
+                      <input [(ngModel)]="clientFee.telefone" type="text" class="form-control" name="telefone"
+                      id="Telefone" placeholder="Digite seu Número" required #telefone="ngModel">
+                      <div *ngIf="!telefone.valid && telefone.touched" 
+                      class="alert alert-danger" role="alert">
+                       Nome é obrigatório.
+                     </div>
 
-                    <label for="taxa" class="form-label">Crédito</label>
-                    <input [(ngModel)]="clientFee.credito" type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
-
-                    <label for="taxa" class="form-label">Parcelado</label>
-                    <input [(ngModel)]="clientFee.parcelado" type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
-                </fieldset>
-                  </div>
-
-<div class="row">
-<div class="col">
-    <!--pre>{{clientFee | json}}</pre-->
-    <label for="maq-model" class="form-label">Modelo</label>
-    <select (change)="updateTotal()" [(ngModel)]="clientFee.modelo" id="maq-model" class="form-select" aria-label="Default select example">
-        <option value= "0" selected>Selecionar Maquina</option>
-        <option *ngFor="let maquina of maquinas" [ngValue]="maquina">{{ maquina.nome }} - {{ maquina.valor }}</option>
-    
-    </select>
-    
-</div>
-    <div class="col">
-        <label for="qnt-maq" class="form-label">Quantidade</label>
-        <input (keyup)="updateTotal()" [(ngModel)]="clientFee.quantidade" id="qnt-maq" type="text" class="form-control" placeholder="Quantidade de Máquina">
-    </div>
-    <div class="col">
-        <label for="resultado" class="form-label">Total</label>
-        <input  [(ngModel)]="clientFee.total" id="resultado" type="text" class="form-control" disabled>
-    </div>
-</div>
-                 <div class="modal-footer">
-                      <button (click)="saveClientFee()" class="btn btn-primary" >Salvar</button>
-                  </div>
-                
-                
-
-            </div>
-        </div>
-      </div>      
-    </div>
-    
-    
- 
-</ng-template>
+                    </div>
+  
+                    <div class="mb-3">
+                      <fieldset class=""><legend>Taxas</legend>
+                      <label for="taxa" class="form-label">Débito</label>
+                      <input name="debit" [(ngModel)]="clientFee.debito" type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
+  
+                      <label for="taxa" class="form-label">Crédito</label>
+                      <input name="credit" [(ngModel)]="clientFee.credito" type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
+  
+                      <label for="taxa" class="form-label">Parcelado</label>
+                      <input name="installment" [(ngModel)]="clientFee.parcelado" type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
+                  </fieldset>
+                    </div>
+  
+  <div class="row">
+  <div class="col">
+      <!--pre>{{clientFee | json}}</pre-->
+      <label for="maq-model" class="form-label">Modelo</label>
+      <select name="model" (change)="updateTotal()" [(ngModel)]="clientFee.modelo" id="maq-model" class="form-select" aria-label="Default select example">
+          <option value= "0" selected>Selecionar Maquina</option>
+          <option *ngFor="let maquina of maquinas" [ngValue]="maquina">{{ maquina.nome }} - {{ maquina.valor }}</option>
+      
+      </select>
+      
+  </div>
+      <div class="col">
+          <label for="qnt-maq" class="form-label">Quantidade</label>
+          <input name="maq_qty" (keyup)="updateTotal()" [(ngModel)]="clientFee.quantidade" id="qnt-maq" type="text" class="form-control" placeholder="Quantidade de Máquina">
+      </div>
+      <div class="col">
+          <label for="resultado" class="form-label">Total</label>
+          <input name="total"  [(ngModel)]="clientFee.total" id="resultado" type="text" class="form-control" disabled>
+      </div>
+  </div>
+                   <div class="modal-footer">
+                        <button ((submit))="saveClientFee(f)" class="btn btn-primary" 
+                        [disabled]="!f.valid">Salvar</button>
+                    </div>
+                  
+                  
+  
+              </div>
+          </div>
+        </div>  
+      </form>   
+      </div>
+      
+      
+   
+  </ng-template>
