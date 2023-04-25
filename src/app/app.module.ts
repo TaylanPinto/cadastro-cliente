@@ -8,7 +8,15 @@ import { ClientesComponent } from './clientes/clientes.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
 import localePt from '@angular/common/locales/pt';
+import { IConfig, NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+
+const maskConfigFunction: () => Partial<IConfig> = () => {
+  return {
+    validation: false,
+  };
+};
 
 registerLocaleData(localePt);
 
@@ -23,9 +31,13 @@ registerLocaleData(localePt);
     BrowserAnimationsModule,
     ModalModule.forRoot(),
     CommonModule,
-    FormsModule
+    FormsModule,
+    NgxMaskDirective,
+    
   ],
-  providers: [{provide: LOCALE_ID, useValue: 'pt-BR' }],
+  providers: [
+    provideNgxMask(maskConfigFunction),
+   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

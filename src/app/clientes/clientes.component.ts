@@ -58,7 +58,12 @@ export class ClientesComponent implements OnInit {
    this.getEmpresasFee()
   }
 
-  
+  verificar(): boolean{
+    return this.clientFee.cpfCnpj == null ? true : this.clientFee.cpfCnpj.length < 12 ? true : false;
+  }
+  getcpfCnpj(): string{
+    return this.verificar() ? '000.000.000-009' : '00.000.000/0000-00';
+  }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);

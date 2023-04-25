@@ -28,7 +28,7 @@
           <div class="mb-3">
           <label for="cpfCnpj" class="form-label">cpf/cnpj</label>
           <input [(ngModel)]="clientFee.cpfCnpj" type="text" class="form-control" id="cpfCnpj" name="cpfCnpj"
-          placeholder="Digite seu cpf/cnpj" required #cpfCnpj="ngModel">
+          placeholder="Digite seu cpf/cnpj" required #cpfCnpj="ngModel" [mask]="getcpfCnpj()">
           <div *ngIf="!cpfCnpj.valid && cpfCnpj.touched" 
           class="alert alert-danger" role="alert">
            Nome é obrigatório.
@@ -57,9 +57,9 @@
                   <div class="mb-3">
                       <label for="Telefone" class="form-label">Telefone</label>
                       <input [(ngModel)]="clientFee.telefone" type="text" class="form-control" name="telefone"
-                      id="Telefone" placeholder="Digite seu Número" required #telefone="ngModel">
+                      id="Telefone" placeholder="Digite seu Número" required #telefone="ngModel" prefix="+55" mask="(00) 00000-0000">
                       <div *ngIf="!telefone.valid && telefone.touched" 
-                      class="alert alert-danger" role="alert">
+                      class="alert alert-danger" role="alert" >
                        Nome é obrigatório.
                      </div>
 
