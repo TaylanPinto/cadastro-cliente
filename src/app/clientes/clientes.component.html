@@ -5,11 +5,9 @@
     </ul>
   
     <br>
-  
     <button type="button" class="btn btn-primary" (click)="openModal(template)">Cadastrar novo cliente</button>
   
   </div>
-  
   
     
   <ng-template #template>
@@ -20,8 +18,7 @@
         <span aria-hidden="true" class="visually-hidden">&times;</span>
       </button>
     </div>
-    <div class="modal-body">
-      
+    <div class="modal-body">  
         
         <form #f="ngForm" (ngSubmit)="saveClientFee(f)" >
 
@@ -31,52 +28,96 @@
           placeholder="Digite seu cpf/cnpj" required #cpfCnpj="ngModel" [mask]="getcpfCnpj()">
           <div *ngIf="!cpfCnpj.valid && cpfCnpj.touched" 
           class="alert alert-danger" role="alert">
-           Nome é obrigatório.
+          Campo obrigatório.
          </div>
-
-        
+       
           <div class="mb-3">
               <label for="email" class="form-label">E-mail</label>
               <input [(ngModel)]="clientFee.email" type="email" class="form-control" id="email" name="email"
               placeholder="Digite seu E-mail" required email #email="ngModel">
               <div *ngIf="!email.valid && email .touched" 
               class="alert alert-danger" role="alert">
-               Nome é obrigatório.
+              Campo obrigatório.
              </div>
-            
-
-              <div class="mb-3">
-                  <label for="razaoSocial" class="form-label">Razão social</label>
+             
+             <div class="row">
+              <div class="col">
+                <label for="razaoSocial" class="form-label">Razão social</label>
                   <input [(ngModel)]="clientFee.razaoSocial" type="text" class="form-control" name="razao"
                   id="razaoSocial" placeholder="Digite a Razão social" required #razao="ngModel">
                   <div *ngIf="!razao.valid && razao.touched" 
                   class="alert alert-danger" role="alert">
-                   Nome é obrigatório.
+                  Campo obrigatório.
                  </div>
+              </div>
 
-                  <div class="mb-3">
-                      <label for="Telefone" class="form-label">Telefone</label>
+              <div class="col">
+                <label for="Telefone" class="form-label">Telefone</label>
                       <input [(ngModel)]="clientFee.telefone" type="text" class="form-control" name="telefone"
                       id="Telefone" placeholder="Digite seu Número" required #telefone="ngModel" prefix="+55" mask="(00) 00000-0000">
                       <div *ngIf="!telefone.valid && telefone.touched" 
                       class="alert alert-danger" role="alert" >
-                       Nome é obrigatório.
+                      Campo obrigatório.
+                         </div>
+                       </div>
                      </div>
+                  </div>
 
-                    </div>
-  
                     <div class="mb-3">
-                      <fieldset class=""><legend>Taxas</legend>
+                      <label for="faturamento" class="form-label">Faturamento</label>
+                      <input [(ngModel)]="clientFee.faturamento" type="text" class="form-control" name="faturamento"
+                      id="faturamento" placeholder="Digite o faturamento" required #faturamento="ngModel"
+                      mask="separator.2" thousandSeparator="."  prefix="R$ " >
+                      <div *ngIf="!faturamento.valid && faturamento.touched" 
+                      class="alert alert-danger" role="alert">
+                       Campo obrigatório.
+                     </div>
+                     </div>
+                     
+                     <fieldset class=""><legend>Taxas</legend>
+
                       <label for="taxa" class="form-label">Débito</label>
-                      <input name="debit" [(ngModel)]="clientFee.debito" type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
+                      <input name="debit" [(ngModel)]="clientFee.debito" type="text" class="form-control" id="taxa" 
+                      placeholder="0,00%" #debito="ngModel"  required maxlength="5" suffix="%" mask="0,00">
+                      <div *ngIf="!debito.valid && debito.touched" 
+                          class="alert alert-danger" role="alert">
+                          Obrigatório.
+                        </div>
   
                       <label for="taxa" class="form-label">Crédito</label>
-                      <input name="credit" [(ngModel)]="clientFee.credito" type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
-  
-                      <label for="taxa" class="form-label">Parcelado</label>
-                      <input name="installment" [(ngModel)]="clientFee.parcelado" type="text" class="form-control" id="taxa" placeholder="Digite a taxa">
+                      
+                      <div class="row">
+                        <div class="col">
+                          <div>3X</div> 
+                          <input  type="text" id="parcelado3" class="form-control" placeholder="0,00%" name="parcelado3" 
+                          [(ngModel)]="clientFee.parcelado3" #parcelado3="ngModel"  required maxlength="5" suffix="%" mask="0,00">
+                          <div *ngIf="!parcelado3.valid && parcelado3.touched" 
+                          class="alert alert-danger" role="alert">
+                          Obrigatório.
+                        </div>
+                        </div>
+                        <div class="col">
+                          <div>6X</div>
+                          <input type="text" id="parcelado6" class="form-control" placeholder="0,00%" name="parcelado6"
+                          [(ngModel)]="clientFee.parcelado6" #parcelado6="ngModel"  required maxlength="5" suffix="%" mask="0,00">
+                          <div *ngIf="!parcelado6.valid && parcelado6.touched" 
+                          class="alert alert-danger" role="alert">
+                          Obrigatório.
+                        </div>
+                        </div>
+
+                        <div class="col">
+                          <div>12X</div>
+                          <input type="text" id="parcelado12" class="form-control" placeholder="0,00%" name="parcelado12"
+                          [(ngModel)]="clientFee.parcelado12" #parcelado12="ngModel"  required maxlength="5" suffix="%" mask="0,00">
+                          <div *ngIf="!parcelado12.valid && parcelado12.touched" 
+                          class="alert alert-danger" role="alert">
+                        </div>
+                      </div>
+                      </div>
+
+                     
                   </fieldset>
-                    </div>
   
   <div class="row">
   <div class="col">
@@ -84,33 +125,22 @@
       <label for="maq-model" class="form-label">Modelo</label>
       <select name="model" (change)="updateTotal()" [(ngModel)]="clientFee.modelo" id="maq-model" class="form-select" aria-label="Default select example">
           <option value= "0" selected>Selecionar Maquina</option>
-          <option *ngFor="let maquina of maquinas" [ngValue]="maquina">{{ maquina.nome }} - {{ maquina.valor }}</option>
-      
+          <option *ngFor="let maquina of maquinas" [ngValue]="maquina">{{ maquina.nome }} - {{ maquina.valor }}</option>  
       </select>
       
   </div>
       <div class="col">
           <label for="qnt-maq" class="form-label">Quantidade</label>
-          <input name="maq_qty" (keyup)="updateTotal()" [(ngModel)]="clientFee.quantidade" id="qnt-maq" type="text" class="form-control" placeholder="Quantidade de Máquina">
-      </div>
-      <div class="col">
-          <label for="resultado" class="form-label">Total</label>
-          <input name="total"  [(ngModel)]="clientFee.total" id="resultado" type="text" class="form-control" disabled>
+          <input name="maq_qty" (keyup)="updateTotal()" [(ngModel)]="clientFee.quantidade" id="qnt-maq" type="text" class="form-control" placeholder="Quantidade de Máquina" maxlength="1">
       </div>
   </div>
                    <div class="modal-footer">
+                       <button type="button" class="btn btn-secondary">Cancel</button>
                         <button ((submit))="saveClientFee(f)" class="btn btn-primary" 
                         [disabled]="!f.valid">Salvar</button>
-                    </div>
-                  
-                  
-  
-              </div>
-          </div>
-        </div>  
+               </div>  
+            </div>
       </form>   
       </div>
       
-      
-   
   </ng-template>

@@ -20,6 +20,7 @@ export class ClientesComponent implements OnInit {
     }
   };
 
+  
 
  maquinas = [
   { id: "1",
@@ -43,6 +44,8 @@ export class ClientesComponent implements OnInit {
     private clienteService: ClienteService
     ) {}
 
+
+
   ngOnInit() {
     this.getEmpresasFee()
     console.log(this.empresas)
@@ -58,6 +61,7 @@ export class ClientesComponent implements OnInit {
    this.getEmpresasFee()
   }
 
+  
   verificar(): boolean{
     return this.clientFee.cpfCnpj == null ? true : this.clientFee.cpfCnpj.length < 12 ? true : false;
   }

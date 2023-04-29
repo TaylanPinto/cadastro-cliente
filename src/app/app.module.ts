@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { LOCALE_ID, DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 
 import localePt from '@angular/common/locales/pt';
 import { IConfig, NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+
 
 const maskConfigFunction: () => Partial<IConfig> = () => {
   return {
@@ -37,6 +38,8 @@ registerLocaleData(localePt);
   ],
   providers: [
     provideNgxMask(maskConfigFunction),
+    { provide: LOCALE_ID, useValue: 'pt' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
    ],
   bootstrap: [AppComponent]
 })
