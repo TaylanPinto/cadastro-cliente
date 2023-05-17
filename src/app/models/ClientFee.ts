@@ -3,13 +3,12 @@ cpfCnpj?: string;
 email?: string;
 razaoSocial?: string;
 telefone?: string;
-debito?: string;
-credito?: string;
-parcelado3?: string;
-parcelado6?: string;
-parcelado12?: string;
+debito!: number;
+parcelado3!: number;
+parcelado6!: number;
+parcelado12!: number;
 modelo!: {id:string, nome: string, valor: number};
 quantidade!: number;
 total!: number;
-faturamento!: number;
+faturamento!: string;
 }

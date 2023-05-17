@@ -8,20 +8,23 @@ import { Injectable } from '@angular/core';
 export class ClienteService {
 
   constructor() { 
+
+
   
   }
  
   public saveClientFee(clientFee: ClientFee){
     const clientFeeSalvas = this.getClientFee()
     clientFeeSalvas.push(clientFee)
-    localStorage.setItem('clientFee', JSON.stringify(clientFeeSalvas));
 
+    localStorage.setItem('clientFee', JSON.stringify(clientFeeSalvas));
+    
+    
   }
+
 
   public getClientFee(): Array<ClientFee>  {
     const jsonString = localStorage.getItem('clientFee') || '[]';
-    return JSON.parse(jsonString);
-
-  
+    return JSON.parse(jsonString);  
   }
 }

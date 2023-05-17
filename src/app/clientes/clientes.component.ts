@@ -11,6 +11,7 @@ import { Form } from '@angular/forms';
 })
 
 export class ClientesComponent implements OnInit {
+  [x: string]: any;
 
   public clientFee: ClientFee = new ClientFee();
 
@@ -19,12 +20,30 @@ export class ClientesComponent implements OnInit {
       this.clientFee.total = this.clientFee.modelo.valor * this.clientFee.quantidade
     }
   };
+    
+  public ajusteTaxa(){  
+    this.clientFee.debito = parseFloat(String(this.clientFee.debito));
+    this.clientFee.parcelado3 = parseFloat(String(this.clientFee.parcelado3));
+    this.clientFee.parcelado6 = parseFloat(String(this.clientFee.parcelado6));
+    this.clientFee.parcelado12 = parseFloat(String(this.clientFee.parcelado12));
+    if(this.clientFee.debito <= 2 ){
+      this.clientFee.debito = this.clientFee.debito + 0.5
+    } 
+    if(this.clientFee.parcelado3 <= 2 ){
+      this.clientFee.parcelado3 = this.clientFee.parcelado3 + 0.5
+    } 
+    if(this.clientFee.parcelado6 <= 2 ){
+      this.clientFee.parcelado6 = this.clientFee.parcelado6 + 0.5
+    } 
+    if(this.clientFee.parcelado12 <= 2 ){
+      this.clientFee.parcelado12 = this.clientFee.parcelado12 + 0.5
+    } 
+  };
 
-  
 
  maquinas = [
   { id: "1",
-    nome: "lio v2", 
+    nome: "lio v2", 
     valor: 189.90},
 
   { id:"2",
@@ -42,26 +61,28 @@ export class ClientesComponent implements OnInit {
 
   constructor (private modalService: BsModalService, 
     private clienteService: ClienteService
-    ) {}
+    ) {  }
 
 
 
   ngOnInit() {
-    this.getEmpresasFee()
-    console.log(this.empresas)
+    this.getEmpresasFee();
+    console.log(this.empresas);
   }
  
   getEmpresasFee(){
-    this.empresas = this.clienteService.getClientFee()
+    this.empresas = this.clienteService.getClientFee();
   }
 
  saveClientFee(form: Form){
+   this.ajusteTaxa();
    this.clienteService.saveClientFee(this.clientFee)
    this.modalService.hide();
-   this.getEmpresasFee()
+   this.getEmpresasFee();
   }
 
   
+
   verificar(): boolean{
     return this.clientFee.cpfCnpj == null ? true : this.clientFee.cpfCnpj.length < 12 ? true : false;
   }
@@ -71,5 +92,6 @@ export class ClientesComponent implements OnInit {
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
-  }
+  } 
+  
 }
