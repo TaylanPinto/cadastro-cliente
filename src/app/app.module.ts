@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 
 import localePt from '@angular/common/locales/pt';
 import { IConfig, NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-
+import { CadastroFormComponent } from './cadastro-form/cadastro-form.component';
 
 const maskConfigFunction: () => Partial<IConfig> = () => {
   return {
@@ -24,8 +24,10 @@ registerLocaleData(localePt);
 @NgModule({
   declarations: [
     AppComponent,
-    ClientesComponent
+    ClientesComponent,
+    CadastroFormComponent
   ],
+  
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -36,6 +38,7 @@ registerLocaleData(localePt);
     NgxMaskDirective,
     
   ],
+
   providers: [
     provideNgxMask(maskConfigFunction),
     { provide: LOCALE_ID, useValue: 'pt' },

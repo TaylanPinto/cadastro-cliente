@@ -2,6 +2,7 @@ import { ClientesComponent } from './../clientes/clientes.component';
 import { ClientFee } from './../models/ClientFee';
 import { Injectable } from '@angular/core';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,8 +10,6 @@ export class ClienteService {
 
   constructor() { 
 
-
-  
   }
  
   public saveClientFee(clientFee: ClientFee){
@@ -18,10 +17,7 @@ export class ClienteService {
     clientFeeSalvas.push(clientFee)
 
     localStorage.setItem('clientFee', JSON.stringify(clientFeeSalvas));
-    
-    
   }
-
 
   public getClientFee(): Array<ClientFee>  {
     const jsonString = localStorage.getItem('clientFee') || '[]';
