@@ -23,16 +23,16 @@ export class CadastroFormComponent implements OnInit {
 
   public ajusteTaxa() {
     this.clientFee.debito = parseFloat(
-      String(this.clientFee.debito.toFixed(2))
+      String(this.clientFee.debito.toFixed(3))
     );
     this.clientFee.parcelado3 = parseFloat(
-      String(this.clientFee.parcelado3.toFixed(2))
+      String(this.clientFee.parcelado3.toFixed(3))
     );
     this.clientFee.parcelado6 = parseFloat(
-      String(this.clientFee.parcelado6.toFixed(2))
+      String(this.clientFee.parcelado6.toFixed(3))
     );
     this.clientFee.parcelado12 = parseFloat(
-      String(this.clientFee.parcelado12.toFixed(2))
+      String(this.clientFee.parcelado12.toFixed(3))
     );
     if (this.clientFee.debito <= 1.5) {
       this.clientFee.debito += 0.8;
@@ -86,6 +86,7 @@ export class CadastroFormComponent implements OnInit {
     this.clienteService.saveClientFee(this.clientFee);
     this.modalService.hide();
     this.getEmpresasFee();
+    this.voltar();
   }
 
   verificar(): boolean {
