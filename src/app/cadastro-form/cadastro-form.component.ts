@@ -2,7 +2,7 @@ import { ClienteService } from '../services/cliente.service';
 import { ClientFee } from '../models/ClientFee';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { Form } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastro-form',
@@ -10,9 +10,10 @@ import { Form } from '@angular/forms';
   styleUrls: ['./cadastro-form.component.css'],
 })
 export class CadastroFormComponent implements OnInit {
-  [x: string]: any;
-
+  
+  
   public clientFee: ClientFee = new ClientFee();
+  configurarFormulario: any;
 
   public updateTotal() {
     if (this.clientFee?.modelo?.valor && this.clientFee?.quantidade) {
@@ -60,16 +61,34 @@ export class CadastroFormComponent implements OnInit {
     { id: '3', nome: 'pio v2', valor: 169.9 },
   ];
 
+  formulario!: FormGroup;
+
   empresas!: ClientFee[];
 
   modalRef?: BsModalRef;
 
   constructor(
     private modalService: BsModalService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private formBuilder: FormBuilder 
   ) {}
 
   ngOnInit() {
+    this.formulario = this.formBuilder.group({
+      cpfCnpj: [null, Validators.required],
+      email: [null, [Validators.email, Validators.required]],
+      razao: [null, Validators.required],
+      telefone: [null, Validators.required],
+      faturamento: [null, Validators.required],
+      debito: [null, Validators.required],
+      credito: [null, Validators.required],
+      parcelado3: [null, Validators.required],
+      parcelado6: [null, Validators.required],
+      parcelado12: [null, Validators.required],
+      model: [null, Validators.required],
+      quantidade: [null, Validators.required],
+    });
+
     this.getEmpresasFee();
     console.log(this.empresas);
   }
@@ -78,11 +97,11 @@ export class CadastroFormComponent implements OnInit {
     this.empresas = this.clienteService.getClientFee();
   }
 
-  saveClientFee(form: Form) {
-    this.clienteService.saveClientFee(this.clientFee);
+  saveClientFee(formulario: FormGroup) {
+    this.clienteService.saveClientFee(this.formulario.value);
     this.modalService.hide();
     this.getEmpresasFee();
-    this.voltar();
+    this.formulario.reset();
   }
 
   verificar(): boolean {
@@ -92,6 +111,7 @@ export class CadastroFormComponent implements OnInit {
       ? true
       : false;
   }
+
   getcpfCnpj(): string {
     return this.verificar() ? '000.000.000-009' : '00.000.000/0000-00';
   }
@@ -99,8 +119,5 @@ export class CadastroFormComponent implements OnInit {
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
     this.ajusteTaxa();
-  }
-  voltar() {
-    history.go(-1);
   }
 }

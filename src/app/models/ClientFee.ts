@@ -4,6 +4,7 @@ email?: string;
 razaoSocial?: string;
 telefone?: string;
 debito!: number;
+credito!:number;
 parcelado3!: number;
 parcelado6!: number;
 parcelado12!: number;

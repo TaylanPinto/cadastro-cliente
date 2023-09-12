@@ -1,37 +1,29 @@
-<form #f="ngForm" (ngSubmit)="saveClientFee(f)">
+<form method="post" [formGroup]="formulario" (ngSubmit)="saveClientFee(formulario)">
   <div class="container">
     <div class="mb-3">
       <legend>Cadastro</legend>
       <label for="cpfCnpj" class="form-label">cpf/cnpj</label>
-      <input [(ngModel)]="clientFee.cpfCnpj" type="text" class="form-control" id="cpfCnpj" name="cpfCnpj" placeholder="Digite seu cpf/cnpj" required #cpfCnpj="ngModel" [mask]="getcpfCnpj()">
-      <div *ngIf="!cpfCnpj.valid && cpfCnpj.touched" class="alert alert-danger" role="alert">
-        Campo obrigatório.
-      </div>
+      <input type="text" class="form-control" id="cpfCnpj" 
+      formControlName="cpfCnpj" placeholder="Digite seu cpf/cnpj" [mask]="getcpfCnpj()">
     </div>
 
     <div class="mb-3">
       <label for="email" class="form-label">E-mail</label>
-      <input [(ngModel)]="clientFee.email" type="email" class="form-control" id="email" name="email" placeholder="Digite seu E-mail" required email #email="ngModel">
-      <div *ngIf="!email.valid && email.touched" class="alert alert-danger" role="alert">
-        Campo obrigatório.
-      </div>
+      <input type="email" class="form-control" id="email" 
+      formControlName="email" placeholder="Digite seu E-mail" email>
     </div>
 
     <div class="row">
       <div class="col">
         <label for="razaoSocial" class="form-label">Razão social</label>
-        <input [(ngModel)]="clientFee.razaoSocial" type="text" class="form-control" name="razao" id="razaoSocial" placeholder="Digite a Razão social" required #razao="ngModel">
-        <div *ngIf="!razao.valid && razao.touched" class="alert alert-danger" role="alert">
-          Campo obrigatório.
-        </div>
+        <input  type="text" class="form-control" formControlName="razao" id="razaoSocial"
+        placeholder="Digite a Razão social">
       </div>
 
       <div class="col">
         <label for="Telefone" class="form-label">Telefone</label>
-        <input [(ngModel)]="clientFee.telefone" type="text" class="form-control" name="telefone" id="Telefone" placeholder="Digite seu Número" required #telefone="ngModel" prefix="+55" mask="(00) 00000-0000">
-        <div *ngIf="!telefone.valid && telefone.touched" class="alert alert-danger" role="alert">
-          Campo obrigatório.
-        </div>
+        <input type="text" class="form-control" formControlName="telefone" id="Telefone"
+        placeholder="Digite seu Número" prefix="+55" mask="(00) 00000-0000">
       </div>
     </div>
 
@@ -39,10 +31,8 @@
       <label for="faturamento" class="form-label">Faturamento</label>
       <div class="input-group mb-3">
         <span class="input-group-text">R$</span>
-        <input [dropSpecialCharacters]="false" [(ngModel)]="clientFee.faturamento" type="text" class="form-control" name="faturamento" id="faturamento" placeholder="Digite o faturamento" required #faturamento="ngModel" mask="separator.2" thousandSeparator="." aria-label="Amount">
-        <div *ngIf="!faturamento.valid && faturamento.touched" class="alert alert-danger" role="alert">
-          Campo obrigatório.
-        </div>
+        <input [dropSpecialCharacters]="false" type="text" class="form-control"
+        formControlName="faturamento" id="faturamento" placeholder="Digite o faturamento" mask="separator.2" thousandSeparator="." aria-label="Amount">
       </div>
     </div>
 
@@ -50,58 +40,56 @@
 
     <div class="mb-3">
       <label for="taxa" class="form-label">Débito</label>
-      <input name="debit" [(ngModel)]="clientFee.debito" type="text" class="form-control" id="taxa" placeholder="0,00%" #debito="ngModel" required minlength="4" maxlength="5" suffix="%" mask="separator.2">
-      <div *ngIf="!debito.valid && debito.touched" class="alert alert-danger" role="alert">
-        Obrigatório.
-      </div>
+      <input formControlName="debito" type="text" class="form-control" id="taxa"
+      placeholder="0,00%" minlength="4" maxlength="5" suffix="%" mask="separator.2">
     </div>
 
-    <label for="taxa" class="form-label">Crédito</label>
+    <div class="mb-3">
+      <label for="taxa" class="form-label">Crédito</label>
+      <input formControlName="credito" type="text" class="form-control" id="taxa" 
+      placeholder="0,00%" minlength="4" maxlength="5" suffix="%" mask="separator.2">
+    </div>
+
+    <label for="taxa" class="form-label">Parcelado</label>
 
     <div class="row">
       <div class="col">
         <div>3X</div>
-        <input type="text" id="parcelado3" class="form-control" placeholder="0,00%" name="parcelado3" [(ngModel)]="clientFee.parcelado3" #parcelado3="ngModel" required minlength="4" maxlength="5" suffix="%" mask="separator.2">
-        <div *ngIf="!parcelado3.valid && parcelado3.touched" class="alert alert-danger" role="alert">
-          Obrigatório.
-        </div>
+        <input type="text" id="parcelado3" class="form-control" placeholder="0,00%" 
+        formControlName="parcelado3" minlength="4" maxlength="5" suffix="%" mask="separator.2">
       </div>
       <div class="col">
         <div>6X</div>
-        <input type="text" id="parcelado6" class="form-control" placeholder="0,00%" name="parcelado6" [(ngModel)]="clientFee.parcelado6" #parcelado6="ngModel" required minlength="4" maxlength="5" suffix="%" mask="separator.2">
-        <div *ngIf="!parcelado6.valid && parcelado6.touched" class="alert alert-danger" role="alert">
-          Obrigatório.
-        </div>
+        <input type="text" id="parcelado6" class="form-control" placeholder="0,00%"
+        formControlName="parcelado6"  minlength="4" maxlength="5" suffix="%" mask="separator.2">
       </div>
       <div class="col">
         <div>12X</div>
-        <input type="text" id="parcelado12" class="form-control" placeholder="0,00%" name="parcelado12" [(ngModel)]="clientFee.parcelado12" #parcelado12="ngModel" required minlength="4" maxlength="5" suffix="%" mask="separator.2">
-        <div *ngIf="!parcelado12.valid && parcelado12.touched" class="alert alert-danger" role="alert">
-          Obrigatório.
-        </div>
+        <input type="text" id="parcelado12" class="form-control" placeholder="0,00%"
+        formControlName="parcelado12" minlength="4" maxlength="5" suffix="%" mask="separator.2">
       </div>
     </div>
 
     <div class="row">
       <div class="col">
         <label for="maq-model" class="form-label">Modelo</label>
-        <select name="model" (change)="updateTotal()" [(ngModel)]="clientFee.modelo" id="maq-model" class="form-select" aria-label="Default select example">
+        <select formControlName="model" (change)="updateTotal()" id="maq-model"
+        class="form-select" aria-label="Default select example">
           <option value="0" selected>Selecionar Maquina</option>
           <option *ngFor="let maquina of maquinas" [ngValue]="maquina">{{ maquina.nome }} - {{ maquina.valor }}</option>
         </select>
       </div>
       <div class="col">
         <label for="qnt-maq" class="form-label">Quantidade</label>
-        <input name="maq_qty" (keyup)="updateTotal()" [(ngModel)]="clientFee.quantidade" id="qnt-maq" type="text" class="form-control" placeholder="Quantidade de Máquina" maxlength="1" required #quantidade="ngModel">
-        <div *ngIf="!quantidade.valid && quantidade.touched" class="alert alert-danger" role="alert">
-          Obrigatório.
-        </div>
+        <input formControlName="quantidade" (keyup)="updateTotal()"
+        id="qnt-maq" type="text" class="form-control" placeholder="Quantidade de Máquina" maxlength="2">
+        
       </div>
     </div>
 
 
-    <a [routerLink]="'/'" type="button" class="btn btn-secondary"> Cancelar</a>
-    <button type="button" class="btn btn-primary" (click)="openModal(template)" [disabled]="!f.valid">Validar taxa</button>
+    <button type="button" class="btn btn-secondary" routerLink="/">Cancelar</button>
+    <button type="button" class="btn btn-primary" (click)="openModal(template)">Validar taxa</button>
   </div>
 </form>
 
@@ -120,7 +108,7 @@
           <ul>
             <li>Débito:</li>
             <ul>
-              <li>À vista - <strong>{{ clientFee.debito }}%</strong></li>
+              <li>À vista - <strong>{{ formulario.value.debito }}%</strong></li>
             </ul>
             <li>Parcelado:</li>
             <ul>
@@ -136,8 +124,8 @@
 
     <div class="modal-footer">
 
-      <button type="button" class="btn btn-secondary" (click)="voltar()">Cancelar</button>
-      <button type="button" class="btn btn-primary" (click)="saveClientFee(f)" [disabled]="!f.valid">Salvar</button>
+      <button type="button" class="btn btn-secondary" routerLink="/cadastro">Cancelar</button>
+      <button type="submit" class="btn btn-primary" (click)="saveClientFee(formulario)">Salvar</button>
 
 
     </div>

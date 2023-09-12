@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClientesComponent } from './clientes/clientes.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CommonModule, registerLocaleData } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import localePt from '@angular/common/locales/pt';
 import { IConfig, NgxMaskDirective, provideNgxMask } from 'ngx-mask';
@@ -34,8 +34,8 @@ registerLocaleData(localePt);
     BrowserAnimationsModule,
     ModalModule.forRoot(),
     CommonModule,
-    FormsModule,
     NgxMaskDirective,
+    ReactiveFormsModule,
     
   ],
 
