@@ -1,7 +1,7 @@
 import { ClienteService } from '../services/cliente.service';
 import { ClientFee } from '../models/ClientFee';
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalService, BsModalRef, ModalModule } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -23,35 +23,40 @@ export class CadastroFormComponent implements OnInit {
   }
 
   public ajusteTaxa() {
-    if (this.clientFee.debito <= 1.5) {
-      this.clientFee.debito += 0.8;
+    if (this.formulario.value.debito <= 1.5) {
+      this.formulario.value.debito += 0.8;
     } else {
-      this.clientFee.debito += 0.5;
+      this.formulario.value.debito += 0.5;
     }
-    if (this.clientFee.parcelado3 <= 1.5) {
-      this.clientFee.parcelado3 += 0.8;
+    if (this.formulario.value.parcelado3 <= 1.5) {
+      this.formulario.value.parcelado3 += 0.8;
     } else {
-      this.clientFee.parcelado3 += 0.5;
+      this.formulario.value.parcelado3 += 0.5;
     }
-    if (this.clientFee.parcelado6 <= 1.5) {
-      this.clientFee.parcelado6 += 0.8;
+    if (this.formulario.value.credito <= 1.5) {
+      this.formulario.value.credito += 0.8;
     } else {
-      this.clientFee.parcelado6 += 0.5;
+      this.formulario.value.credito += 0.5;
     }
-    if (this.clientFee.parcelado12 <= 1.5) {
-      this.clientFee.parcelado12 += 0.8;
+    if (this.formulario.value.parcelado6 <= 1.5) {
+      this.formulario.value.parcelado6 += 0.8;
     } else {
-      this.clientFee.parcelado12 += 0.5;
+      this.formulario.value.parcelado6 += 0.5;
     }
-    this.clientFee.debito = parseFloat(this.clientFee.debito.toFixed(2));
-    this.clientFee.parcelado3 = parseFloat(
-      this.clientFee.parcelado3.toFixed(2)
+    if (this.formulario.value.parcelado12 <= 1.5) {
+      this.formulario.value.parcelado12 += 0.8;
+    } else {
+      this.formulario.value.parcelado12 += 0.5;
+    }
+    this.formulario.value.debito = parseFloat(this.formulario.value.debito.toFixed(2));
+    this.formulario.value.parcelado3 = parseFloat(
+      this.formulario.value.parcelado3.toFixed(2)
     );
-    this.clientFee.parcelado6 = parseFloat(
-      this.clientFee.parcelado6.toFixed(2)
+    this.formulario.value.parcelado6 = parseFloat(
+      this.formulario.value.parcelado6.toFixed(2)
     );
-    this.clientFee.parcelado12 = parseFloat(
-      this.clientFee.parcelado12.toFixed(2)
+    this.formulario.value.parcelado12 = parseFloat(
+      this.formulario.value.parcelado12.toFixed(2)
     );
   }
 
@@ -67,17 +72,20 @@ export class CadastroFormComponent implements OnInit {
 
   modalRef?: BsModalRef;
 
+  progresso: number = 0
+
   constructor(
-    private modalService: BsModalService,
+    private modalService: BsModalService, 
     private clienteService: ClienteService,
-    private formBuilder: FormBuilder 
+    private formBuilder: FormBuilder,
+    
   ) {}
 
   ngOnInit() {
     this.formulario = this.formBuilder.group({
       cpfCnpj: [null, Validators.required],
       email: [null, [Validators.email, Validators.required]],
-      razao: [null, Validators.required],
+      razaoSocial: [null, Validators.required],
       telefone: [null, Validators.required],
       faturamento: [null, Validators.required],
       debito: [null, Validators.required],
@@ -85,12 +93,18 @@ export class CadastroFormComponent implements OnInit {
       parcelado3: [null, Validators.required],
       parcelado6: [null, Validators.required],
       parcelado12: [null, Validators.required],
-      model: [null, Validators.required],
+      modelo: [null, Validators.required],
       quantidade: [null, Validators.required],
     });
 
     this.getEmpresasFee();
     console.log(this.empresas);
+  }
+
+  atualizarProgresso (){
+    const camposTotais = Object.keys(this.formulario.controls).length;
+    const camposPreenchidos = Object.values(this.formulario.controls).filter(control => control.value).length;
+    this.progresso = (camposPreenchidos / camposTotais) * 100;
   }
 
   getEmpresasFee() {
@@ -105,19 +119,17 @@ export class CadastroFormComponent implements OnInit {
   }
 
   verificar(): boolean {
-    return this.clientFee.cpfCnpj == null
-      ? true
-      : this.clientFee.cpfCnpj.length < 12
-      ? true
-      : false;
+    return this.clientFee.cpfCnpj == null ? true : this.clientFee.cpfCnpj.length < 12 ? true : false;
   }
 
   getcpfCnpj(): string {
     return this.verificar() ? '000.000.000-009' : '00.000.000/0000-00';
   }
 
+
+
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
     this.ajusteTaxa();
+    this.modalRef = this.modalService.show(template);
   }
 }

@@ -1,9 +1,22 @@
-<div class="container">
-
-  <ul class="list-group">
-    <h1>Clientes Cadastrados:</h1>
-      <li *ngFor="let empresa of empresas " class="list-group-item">{{ empresa.cpfCnpj }} - {{ empresa.razaoSocial }} </li>
-    </ul>
-    <br>
-    <button type="button" class="btn btn-primary" routerLink="/cadastro">Cadastrar novo cliente</button>
+<div class="navbarin">
+<nav class="navbar navbar-dark bg-primary">
   
+  <a class="navbar-brand">Credênciamento de Cliente</a> 
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-warning" type="submit">Search</button>
+  </form>
+</nav>
+</div>
+<body class="container1">
+  <div>
+    <br>
+    <ul class="list-group">
+      <h1>Clientes Cadastrados:</h1>
+        <li *ngFor="let empresa of empresas " class="list-group-item list-group-item-warning"><strong> Cnpj -</strong> {{ empresa.cpfCnpj }} <strong> E-mail - </strong>{{ this.empresa.email }}<strong> Razão Social - </strong>{{ empresa.razaoSocial }}</li>
+      </ul>
+      <br>
+      <button type="button" class="btn btn-primary" routerLink="/cadastro">Cadastrar novo cliente</button>
+    
+  </div>
+</body>

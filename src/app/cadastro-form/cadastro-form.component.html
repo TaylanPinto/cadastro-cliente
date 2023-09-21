@@ -1,95 +1,107 @@
-<form method="post" [formGroup]="formulario" (ngSubmit)="saveClientFee(formulario)">
+<form class="form1" method="post" [formGroup]="formulario" (ngSubmit)="saveClientFee(formulario)">
   <div class="container">
+    <br>
+    <div class="form-image">
+      <img src="" alt="">
+    </div>
+    <div class="progress">
+      <div
+        class="progress-bar"
+        role="progressbar"
+        [style.width.%]="progresso"
+      ></div>
+    </div>
+
     <div class="mb-3">
-      <legend>Cadastro</legend>
-      <label for="cpfCnpj" class="form-label">cpf/cnpj</label>
+      <legend><strong> Cadastro </strong></legend>
+      <label for="cpfCnpj" class="form-label"> <strong> cpf/Cnpj </strong></label>
       <input type="text" class="form-control" id="cpfCnpj" 
       formControlName="cpfCnpj" placeholder="Digite seu cpf/cnpj" [mask]="getcpfCnpj()">
     </div>
 
     <div class="mb-3">
-      <label for="email" class="form-label">E-mail</label>
-      <input type="email" class="form-control" id="email" 
+      <label for="email" class="form-label"> <strong> E-mail </strong></label>
+      <input type="email" class="form-control" id="inpt" 
       formControlName="email" placeholder="Digite seu E-mail" email>
     </div>
 
     <div class="row">
       <div class="col">
-        <label for="razaoSocial" class="form-label">Razão social</label>
-        <input  type="text" class="form-control" formControlName="razao" id="razaoSocial"
+        <label for="razaoSocial" class="form-label"> <strong> Razão Social </strong></label>
+        <input  type="text" class="form-control" formControlName="razaoSocial" id="inpt"
         placeholder="Digite a Razão social">
       </div>
 
       <div class="col">
-        <label for="Telefone" class="form-label">Telefone</label>
-        <input type="text" class="form-control" formControlName="telefone" id="Telefone"
+        <label for="Telefone" class="form-label"> <strong> Telefone </strong></label>
+        <input type="text" class="form-control" formControlName="telefone" id="inpt"
         placeholder="Digite seu Número" prefix="+55" mask="(00) 00000-0000">
       </div>
     </div>
 
     <div class="mb-3">
-      <label for="faturamento" class="form-label">Faturamento</label>
+      <label for="faturamento" class="form-label"> <strong> Faturamento </strong></label>
       <div class="input-group mb-3">
         <span class="input-group-text">R$</span>
-        <input [dropSpecialCharacters]="false" type="text" class="form-control"
+        <input [dropSpecialCharacters]="false" type="text" class="form-control" id="inpt"
         formControlName="faturamento" id="faturamento" placeholder="Digite o faturamento" mask="separator.2" thousandSeparator="." aria-label="Amount">
       </div>
     </div>
 
     <legend>Taxas</legend>
-
-    <div class="mb-3">
-      <label for="taxa" class="form-label">Débito</label>
-      <input formControlName="debito" type="text" class="form-control" id="taxa"
+    <div class="row">
+    <div class="col">
+      <label for="taxa" class="form-label"> <strong> Débito </strong></label>
+      <input formControlName="debito" type="text" class="form-control" id="inpt"
       placeholder="0,00%" minlength="4" maxlength="5" suffix="%" mask="separator.2">
     </div>
 
-    <div class="mb-3">
-      <label for="taxa" class="form-label">Crédito</label>
-      <input formControlName="credito" type="text" class="form-control" id="taxa" 
+    <div class="col">
+      <label for="taxa" class="form-label"> <strong> Crédito  </strong></label>
+      <input formControlName="credito" type="text" class="form-control" id="inpt"
       placeholder="0,00%" minlength="4" maxlength="5" suffix="%" mask="separator.2">
     </div>
-
-    <label for="taxa" class="form-label">Parcelado</label>
+  </div>
+    <label for="taxa" class="form-label"> <strong> Parcelado </strong></label>
 
     <div class="row">
       <div class="col">
         <div>3X</div>
-        <input type="text" id="parcelado3" class="form-control" placeholder="0,00%" 
+        <input type="text" id="inpt" class="form-control" placeholder="0,00%" 
         formControlName="parcelado3" minlength="4" maxlength="5" suffix="%" mask="separator.2">
       </div>
       <div class="col">
         <div>6X</div>
-        <input type="text" id="parcelado6" class="form-control" placeholder="0,00%"
+        <input type="text" id="inpt" class="form-control" placeholder="0,00%" 
         formControlName="parcelado6"  minlength="4" maxlength="5" suffix="%" mask="separator.2">
       </div>
       <div class="col">
         <div>12X</div>
-        <input type="text" id="parcelado12" class="form-control" placeholder="0,00%"
+        <input type="text" id="inpt" class="form-control" placeholder="0,00%"
         formControlName="parcelado12" minlength="4" maxlength="5" suffix="%" mask="separator.2">
       </div>
     </div>
-
+    <br>
     <div class="row">
       <div class="col">
-        <label for="maq-model" class="form-label">Modelo</label>
-        <select formControlName="model" (change)="updateTotal()" id="maq-model"
+        <label for="maq-model" class="form-label"><strong> Modelo </strong></label>
+        <select formControlName="modelo" (change)="updateTotal()" id="maq-model" id="inpt"
         class="form-select" aria-label="Default select example">
           <option value="0" selected>Selecionar Maquina</option>
           <option *ngFor="let maquina of maquinas" [ngValue]="maquina">{{ maquina.nome }} - {{ maquina.valor }}</option>
         </select>
       </div>
       <div class="col">
-        <label for="qnt-maq" class="form-label">Quantidade</label>
-        <input formControlName="quantidade" (keyup)="updateTotal()"
-        id="qnt-maq" type="text" class="form-control" placeholder="Quantidade de Máquina" maxlength="2">
+        <label for="qnt-maq" class="form-label"> <strong> Quantidade </strong></label>
+        <input formControlName="quantidade" (keyup)="updateTotal()" 
+        id="inpt" type="text" class="form-control" placeholder="Quantidade de Máquina" maxlength="2">
         
       </div>
     </div>
 
-
-    <button type="button" class="btn btn-secondary" routerLink="/">Cancelar</button>
-    <button type="button" class="btn btn-primary" (click)="openModal(template)">Validar taxa</button>
+    <br>
+    <button type="button" class="botao" routerLink="/">Cancelar</button>
+    <button type="button" class="botao1" (click)="openModal(template)">Validar taxa</button>
   </div>
 </form>
 
@@ -100,34 +112,32 @@
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
 
-    <div class="container overflow-hidden text-center">
-      <div class="row gy-5">
+    <div class="modal-body">
+    
+      
         <div class="col-6">
-          <ul>
-            <li>Débito:</li>
             <ul>
-              <li>À vista - <strong>{{ formulario.value.debito }}%</strong></li>
+              <label>Débito:</label>
+             <li>À vista - <strong>{{ formulario.value.debito }}%</strong></li> 
             </ul>
-            <li>Parcelado:</li>
             <ul>
-              <li>3x - <strong>{{ clientFee.parcelado3 }}%</strong></li>
-              <li>6x - <strong>{{ clientFee.parcelado6 }}%</strong></li>
-              <li>12x - <strong>{{ clientFee.parcelado12 }}%</strong></li>
-            </ul>
-          </ul>
+              <label>Crédito:</label>
+              <li>  <strong>{{ formulario.value.credito }}%</strong></li>
+              <br>
+
+             <label>Parcelado:</label>
+              <li>3x - <strong>{{ formulario.value.parcelado3 }}%</strong></li>
+              <li>6x - <strong>{{formulario.value.parcelado6 }}%</strong></li>
+              <li>12x - <strong>{{ formulario.value.parcelado12 }}%</strong></li>
+           </ul>
         </div>
-
       </div>
-    </div>
-
+   
     <div class="modal-footer">
 
-      <button type="button" class="btn btn-secondary" routerLink="/cadastro">Cancelar</button>
+      <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
       <button type="submit" class="btn btn-primary" (click)="saveClientFee(formulario)">Salvar</button>
-
-
     </div>
-  </div>
+ 
 </ng-template>
